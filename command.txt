@@ -1,0 +1,2 @@
+scrapy crawl lix-spider
+scrapy crawl lix-spider -O ahead.json
