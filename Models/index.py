@@ -100,7 +100,23 @@ class Dbcontext():
    conferencesPlanning=conferencesPlanning()
    conferencesRunnning=conferencesRunnning()
 
-context=Dbcontext()
+contextModels=Dbcontext()
+
+result=True
+        
+conferencesIDs = contextModels.conferences.getAll()
+for id in conferencesIDs:
+   if 'Conference' == id.conferenceId:
+         result=False
+         break
+
+if result is True:
+   contextModels.conferences.insert('Conference',
+                           'City, Country', 
+                           'Deadline', 
+                           'Date', 
+                           'Notification', 
+                           'Submission format and comments')
 
 # result=context.conferences.insert('ICLP', 'Dallas, Texas, USA', 
 #                                   '29 April / 6 May 2024 8 July 2024', 

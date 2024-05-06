@@ -6,7 +6,7 @@ class conferencesDetailsModel(Base):
     id=Column(Integer, primary_key=True, autoincrement=True)
     conferenceId=Column(String(10), nullable=False)
     name=Column(String(100), nullable=False)
-    website=Column(String(100), nullable=False)
+    website=Column(String(100), nullable=True)
 
     def __init__(self, conferenceId, name, website):
         self.conferenceId=conferenceId
