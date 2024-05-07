@@ -16,6 +16,21 @@ class CrawlerAheadItem(scrapy.Item):
     notification=scrapy.Field()
     format_and_comemnt=scrapy.Field()
 
+class CrawlerCCFItem(scrapy.Item):
+    # define the fields for your item here like:
+    # name = scrapy.Field()
+    type=scrapy.Field()
+    conference=scrapy.Field()
+    description=scrapy.Field()
+    place=scrapy.Field()
+    year=scrapy.Field()
+    date=scrapy.Field()
+    deadline=scrapy.Field()
+    timezone=scrapy.Field()
+    website=scrapy.Field()
+    note=scrapy.Field()
+
+
 class CrawlerRunningItem(scrapy.Item):
     type=scrapy.Field()
     conference=scrapy.Field()

@@ -1,4 +1,5 @@
 from Models.conferences import *
+from Models.conferencesCCF import *
 from Models.conferencesDetails import *
 from Models.conferencesFuture import *
 from Models.conferencesPlanning import *
@@ -26,8 +27,44 @@ class conferences():
    def update(self):
       pass
 
-   def delete(self):
+   def deleteAll(self):
+      result = session.query(conferencesModel).delete()
+      session.commit()
+      return result
+
+class conferencesCCF():
+   def getAll(self):
+      return session.query(conferencesCCFModel).all()
+   
+   def insert(self, conferenceId, 
+                  description, 
+                  place, 
+                  year, 
+                  date, 
+                  deadline, 
+                  timezone, 
+                  website, 
+                  note):
+      record = conferencesCCFModel(conferenceId, 
+                                    description, 
+                                    place, 
+                                    year, 
+                                    date, 
+                                    deadline, 
+                                    timezone, 
+                                    website, 
+                                    note)
+      result = session.add(record)
+      session.commit()
+      return result
+
+   def update(self):
       pass
+
+   def deleteAll(self):
+      result = session.query(conferencesCCFModel).delete()
+      session.commit()
+      return result
 
 class conferencesDetails():
    def getAll(self):
@@ -42,8 +79,10 @@ class conferencesDetails():
    def update(self):
       pass
 
-   def delete(self):
-      pass
+   def deleteAll(self):
+      result = session.query(conferencesDetailsModel).delete()
+      session.commit()
+      return result
 
 class conferencesFutute():
    def getAll(self):
@@ -58,8 +97,10 @@ class conferencesFutute():
    def update(self):
       pass
 
-   def delete(self):
-      pass
+   def deleteAll(self):
+      result = session.query(conferencesFutureModel).delete()
+      session.commit()
+      return result
 
 class conferencesPlanning():
    def getAll(self):
@@ -74,8 +115,10 @@ class conferencesPlanning():
    def update(self):
       pass
 
-   def delete(self):
-      pass
+   def deleteAll(self):
+      result = session.query(conferencesPlanningModel).delete()
+      session.commit()
+      return result
    
 class conferencesRunnning():
    def getAll(self):
@@ -90,11 +133,14 @@ class conferencesRunnning():
    def update(self):
       pass
 
-   def delete(self):
-      pass
+   def deleteAll(self):
+      result = session.query(conferencesRunningModel).delete()
+      session.commit()
+      return result
 
 class Dbcontext():
    conferences=conferences()
+   conferencesCCF=conferencesCCF()
    conferencesDetails=conferencesDetails()
    conferencesFutute=conferencesFutute()
    conferencesPlanning=conferencesPlanning()
@@ -102,21 +148,21 @@ class Dbcontext():
 
 contextModels=Dbcontext()
 
-result=True
+# result=True
         
-conferencesIDs = contextModels.conferences.getAll()
-for id in conferencesIDs:
-   if 'Conference' == id.conferenceId:
-         result=False
-         break
+# conferencesIDs = contextModels.conferences.getAll()
+# for id in conferencesIDs:
+#    if 'Conference' == id.conferenceId:
+#          result=False
+#          break
 
-if result is True:
-   contextModels.conferences.insert('Conference',
-                           'City, Country', 
-                           'Deadline', 
-                           'Date', 
-                           'Notification', 
-                           'Submission format and comments')
+# if result is True:
+#    contextModels.conferences.insert('Conference',
+#                            'City, Country', 
+#                            'Deadline', 
+#                            'Date', 
+#                            'Notification', 
+#                            'Submission format and comments')
 
 # result=context.conferences.insert('ICLP', 'Dallas, Texas, USA', 
 #                                   '29 April / 6 May 2024 8 July 2024', 

@@ -24,6 +24,24 @@ class CrawlerPipeline:
                                                 item['date'], 
                                                 item['notification'], 
                                                 item['format_and_comemnt'])
+                
+        if item['type'] == 'ccf':
+            conferencesIDs = contextModels.conferencesCCF.getAll()
+            for id in conferencesIDs:
+                if item['conference'] == id.conferenceId:
+                    result=False
+                    break
+            if result is True:
+                contextModels.conferencesCCF.insert(item['conference'],
+                                                    item['description'], 
+                                                    item['place'], 
+                                                    item['year'], 
+                                                    item['date'], 
+                                                    item['deadline'], 
+                                                    item['timezone'], 
+                                                    item['website'], 
+                                                    item['note'])
+                
         if item['type'] == 'running':
             conferencesRunnningIDs = contextModels.conferencesRunnning.getAll()
             for id in conferencesRunnningIDs:
