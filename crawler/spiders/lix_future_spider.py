@@ -8,12 +8,9 @@ class lixFutureSpider(scrapy.Spider):
     def parse(self, response):
         crawlerItem=CrawlerFutureItem()
         ID_LIST=['#ahead', '#running', '#future']
-        HEADER='thead tr'
         BODY='tbody tr'
-        FOOTER='tfoot tr'
         CONFERENCE_SELECTOR='.navlist + .conference'
         NEXT_BODY_SELECTOR=' + td'    # trong thẻ tbody
-        NEXT_BANNER_SELECTOR=' + th'   # BANNER dai dien cho header va footer
         RESULT='::text'
         RESULT_BODY=' *::text'
 
@@ -21,21 +18,6 @@ class lixFutureSpider(scrapy.Spider):
 
         ######################## Future ########################
         FUTURE_SELECTOR=f'{ID_LIST[2]} + {CONFERENCE_SELECTOR}'
-
-        # header
-        for title in response.css(FUTURE_SELECTOR):
-            START_FUTURE_SELECTOR=f' {HEADER} th'  
-            crawlerItem['type']='future'
-            crawlerItem['conference']=title.css(START_FUTURE_SELECTOR+RESULT).extract_first()
-            crawlerItem['city']=title.css(START_FUTURE_SELECTOR+NEXT_BANNER_SELECTOR+RESULT).extract_first()
-            crawlerItem['date']=title.css(START_FUTURE_SELECTOR+NEXT_BANNER_SELECTOR*2+RESULT).extract_first()
-            crawlerItem['notification']=title.css(START_FUTURE_SELECTOR+NEXT_BANNER_SELECTOR*3+RESULT).extract_first()
-            crawlerItem['final_version']=title.css(START_FUTURE_SELECTOR+NEXT_BANNER_SELECTOR*4+RESULT).extract_first()
-            crawlerItem['early_registration']=title.css(START_FUTURE_SELECTOR+NEXT_BANNER_SELECTOR*5+RESULT).extract_first()
-            crawlerItem['remark']=title.css(START_FUTURE_SELECTOR+NEXT_BANNER_SELECTOR*6+RESULT).extract_first()
-            yield crawlerItem
-
-        # body
         START=f'{FUTURE_SELECTOR} {BODY}'
         for title in response.css(START):
             START_FUTURE_SELECTOR=f'td'
@@ -65,17 +47,4 @@ class lixFutureSpider(scrapy.Spider):
                                                                                                                          .replace(',,', ',')\
                                                                                                                          .replace('None', '')\
                                                                                                                          .strip()
-            yield crawlerItem
-
-        # footer
-        for title in response.css(FUTURE_SELECTOR):
-            START_FUTURE_SELECTOR=f'{FOOTER} th'
-            crawlerItem['type']='future'
-            crawlerItem['conference']=title.css(START_FUTURE_SELECTOR+RESULT).extract_first()
-            crawlerItem['city']=title.css(START_FUTURE_SELECTOR+NEXT_BANNER_SELECTOR+RESULT).extract_first()
-            crawlerItem['date']=title.css(START_FUTURE_SELECTOR+NEXT_BANNER_SELECTOR*2+RESULT).extract_first()
-            crawlerItem['notification']=title.css(START_FUTURE_SELECTOR+NEXT_BANNER_SELECTOR*3+RESULT).extract_first()
-            crawlerItem['final_version']=title.css(START_FUTURE_SELECTOR+NEXT_BANNER_SELECTOR*4+RESULT).extract_first()
-            crawlerItem['early_registration']=title.css(START_FUTURE_SELECTOR+NEXT_BANNER_SELECTOR*5+RESULT).extract_first()
-            crawlerItem['remark']=title.css(START_FUTURE_SELECTOR+NEXT_BANNER_SELECTOR*6+RESULT).extract_first()
             yield crawlerItem

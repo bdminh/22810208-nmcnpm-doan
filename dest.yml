@@ -2265,6 +2265,21 @@
       timezone: AoE
       date: May 29-31, 2024
       place: Rabat, Morocco
+- title: SPAA
+  description: ACM Symposium on Parallelism in Algorithms and Architectures
+  sub: DS
+  rank: B
+  dblp: spaa
+  confs:
+    - year: 2024
+      id: spaa24
+      link: https://spaa.acm.org/
+      timeline:
+        - abstract_deadline: '2024-01-19 23:59:00'
+          deadline: '2024-01-24 23:59:00'
+      timezone: AoE
+      date: June 17-21, 2024
+      place: Nantes, France
 - title: ICA3PP
   description: International Conference on Algorithms and Architectures for Parallel Processing
   sub: DS
@@ -2551,6 +2566,14 @@
   rank: B
   dblp: cgo
   confs:
+    - year: 2025
+      id: cgo2025
+      link: https://conf.researchr.org/home/cgo-2025
+      timeline:
+        - deadline: '2024-05-30 23:59:59'
+      timezone: AoE
+      date: TBD
+      place: TBD
     - year: 2024
       id: cgo2024
       link: https://conf.researchr.org/home/cgo-2024
@@ -2758,6 +2781,17 @@
       timezone: AoE
       date: October 21-October 25, 2023
       place: Vienna, Austria
+    - year: 2024
+      id: pact24
+      link: https://pact2024.github.io/
+      timeline:
+        - deadline: '2024-03-25 23:59:59'
+          comment: 'Abstract submission deadline'
+        - deadline: '2024-04-01 23:59:59'
+          comment: 'Paper submission deadline'
+      timezone: AoE
+      date: October 13-16, 2024
+      place: Long Beach, California, USA
 - title: IISWC
   description: IEEE International Symposium on Workload Characterization
   sub: DS
@@ -2941,6 +2975,15 @@
       timezone: AoE
       date: May 15-19, 2023
       place: St. Petersburg, Florida USA
+    - year: 2024
+      id: ipdps24
+      link: https://www.ipdps.org/
+      timeline:
+        - abstract_deadline: '2023-09-28 23:59:59'
+          deadline: '2023-10-05 23:59:59'
+      timezone: AoE
+      date: May 27-31, 2024
+      place: San Francisco, California USA
 - title: USENIX ATC
   description: USENIX Annual Technical Conference
   sub: DS
@@ -3019,6 +3062,15 @@
       timezone: AoE
       date: October 31-November 3, 2023
       place: Santa Fe, New Mexico, USA
+    - year: 2024
+      id: cluster24
+      link: https://clustercomp.org/2024
+      timeline:
+        - deadline: '2024-05-09 23:59:59'
+          comment: 'Full Paper Deadline'
+      timezone: AoE
+      date: September 24-27, 2024
+      place: Kobe, Japan
 - title: DAC
   description: Design Automation Conference
   sub: DS
@@ -3112,6 +3164,16 @@
       timezone: AoE
       date: November 6-8, 2023
       place: Washington DC, USA
+    - year: 2024
+      id: iccd24
+      link: https://www.iccd-conf.com/Call_for_papers.html
+      timeline:
+        - abstract_deadline: '2024-05-20 23:59:00'
+          deadline: '2024-05-20 23:59:00'
+          comment: 'abstract and full paper deadline'
+      timezone: AoE
+      date: November, 2024
+      place: Milan, Italy
 - title: FAST
   description: USENIX Conference on File and Storage Technologies
   sub: DS
@@ -3149,6 +3211,14 @@
         - deadline: '2023-09-21 23:59:59'
       timezone: UTC-7
       date: FEBRUARY 27-29, 2024
+      place: SANTA CLARA, CA, USA
+    - year: 2025
+      id: fast25
+      link: https://www.usenix.org/conference/fast25
+      timeline:
+        - deadline: '2024-09-17 23:59:59'
+      timezone: UTC-7
+      date: FEBRUARY 25-27, 2025
       place: SANTA CLARA, CA, USA
 - title: ICDCS
   description: IEEE International Conference on Distributed Computing Systems

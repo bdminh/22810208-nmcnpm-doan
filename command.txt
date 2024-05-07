@@ -3,6 +3,7 @@ scrapy crawl lix-fullname-spider
 scrapy crawl lix-future-spider
 scrapy crawl lix-planning-spider
 scrapy crawl lix-running-spider
+scrapy crawl ccf-spider
 scrapy crawl lix-spider -O ahead.json => chuyển sang item là không dùng json để debug được nữa
 alembic revision --autogenerate -m "Remove some constraint"
 alembic upgrade head

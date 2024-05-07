@@ -15,8 +15,6 @@ class lixFullnameSpider(scrapy.Spider):
 
         # ######################## Fullname ########################
         FULLNAME_SELECTOR=f'#popup .navlist + .central'
-        
-        # body
         START=f'{FULLNAME_SELECTOR} {BODY}'
         for title in response.css(START):
             START_FULLNAME_SELECTOR=f'td'
