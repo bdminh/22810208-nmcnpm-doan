@@ -13,3 +13,5 @@ DELETE FROM conferencesDetails;
 DELETE FROM conferencesFuture;
 DELETE FROM conferencesPlanning;
 DELETE FROM conferencesRunning;
+pip install -r requirement.txt
+virtualenv venv --python=python3.10.4

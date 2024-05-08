@@ -1,3 +1,5 @@
+import os
+
 from Models.conferences import *
 from Models.conferencesCCF import *
 from Models.conferencesDetails import *
@@ -5,8 +7,10 @@ from Models.conferencesFuture import *
 from Models.conferencesPlanning import *
 from Models.conferencesRunning import *
 
+path=os.path.dirname(os.path.abspath(__file__))
+
 # Create the engine and session 
-engine = create_engine('sqlite:///Models/qldh.sqlite') 
+engine = create_engine(f'sqlite:///{path}\\qldh.sqlite') 
 Session = sessionmaker(bind=engine)
 session = Session()
 
@@ -18,8 +22,28 @@ class conferences():
    def getAll(self):
       return session.query(conferencesModel).all()
    
-   def insert(self, conferenceId, city, deadline, date, notification, submission):
-      record = conferencesModel(conferenceId, city, deadline, date, notification, submission)
+   def getByID(self, keyword):
+      return session.query(conferencesModel).filter(conferencesModel.conferenceId.contains(keyword)).all()
+
+   def getByCity(self, keyword):
+      return session.query(conferencesModel).filter(conferencesModel.city.contains(keyword)).all()
+
+   def getByDeadline(self, keyword):
+      return session.query(conferencesModel).filter(conferencesModel.deadline.contains(keyword)).all()
+
+   def insert(self, 
+              conferenceId, 
+              city, 
+              deadline, 
+              date, 
+              notification, 
+              submission):
+      record = conferencesModel(conferenceId, 
+                                city, 
+                                deadline, 
+                                date, 
+                                notification, 
+                                submission)
       result = session.add(record)
       session.commit()
       return result
@@ -35,7 +59,16 @@ class conferences():
 class conferencesCCF():
    def getAll(self):
       return session.query(conferencesCCFModel).all()
-   
+
+   def getByID(self, keyword):
+      return session.query(conferencesCCFModel).filter(conferencesCCFModel.conferenceId.contains(keyword)).all()
+
+   def getByCity(self, keyword):
+      return session.query(conferencesCCFModel).filter(conferencesCCFModel.place.contains(keyword)).all()
+
+   def getByDeadline(self, keyword):
+      return session.query(conferencesCCFModel).filter(conferencesCCFModel.deadline.contains(keyword)).all()
+
    def insert(self, conferenceId, 
                   description, 
                   place, 
@@ -69,7 +102,10 @@ class conferencesCCF():
 class conferencesDetails():
    def getAll(self):
       return session.query(conferencesDetailsModel).all()
-   
+
+   def getByID(self, keyword):
+      return session.query(conferencesDetailsModel).filter(conferencesDetailsModel.conferenceId.contains(keyword)).all()
+
    def insert(self, conferenceId, name, website):
       record = conferencesDetailsModel(conferenceId, name, website)
       result = session.add(record)
@@ -87,9 +123,31 @@ class conferencesDetails():
 class conferencesFutute():
    def getAll(self):
       return session.query(conferencesFutureModel).all()
-   
-   def insert(self, conferenceId, city, date, notification, finalVersion, earlyRegistration, remarks):
-      record = conferencesFutureModel(conferenceId, city, date, notification, finalVersion, earlyRegistration, remarks)
+
+   def getByID(self, keyword):
+      return session.query(conferencesFutureModel).filter(conferencesFutureModel.conferenceId.contains(keyword)).all()
+
+   def getByCity(self, keyword):
+      return session.query(conferencesFutureModel).filter(conferencesFutureModel.city.contains(keyword)).all()
+
+   def getByDeadline(self, keyword):
+      return session.query(conferencesFutureModel).filter(conferencesFutureModel.finalVersion.contains(keyword)).all()
+
+   def insert(self, 
+              conferenceId, 
+              city, 
+              date, 
+              notification, 
+              finalVersion, 
+              earlyRegistration, 
+              remarks):
+      record = conferencesFutureModel(conferenceId, 
+                                      city, 
+                                      date, 
+                                      notification, 
+                                      finalVersion, 
+                                      earlyRegistration, 
+                                      remarks)
       result = session.add(record)
       session.commit()
       return result
@@ -105,9 +163,29 @@ class conferencesFutute():
 class conferencesPlanning():
    def getAll(self):
       return session.query(conferencesPlanningModel).all()
-   
-   def insert(self, conferenceId, Year, city, startingDate, endingDate, remarks):
-      record = conferencesPlanningModel(conferenceId, Year, city, startingDate, endingDate, remarks)
+
+   def getByID(self, keyword):
+      return session.query(conferencesPlanningModel).filter(conferencesPlanningModel.conferenceId.contains(keyword)).all()
+
+   def getByCity(self, keyword):
+      return session.query(conferencesPlanningModel).filter(conferencesPlanningModel.city.contains(keyword)).all()
+
+   def getByDeadline(self, keyword):
+      return session.query(conferencesPlanningModel).filter(conferencesPlanningModel.endingDate.contains(keyword)).all()
+
+   def insert(self, 
+              conferenceId, 
+              Year, 
+              city, 
+              startingDate, 
+              endingDate, 
+              remarks):
+      record = conferencesPlanningModel(conferenceId, 
+                                        Year, 
+                                        city, 
+                                        startingDate, 
+                                        endingDate, 
+                                        remarks)
       result = session.add(record)
       session.commit()
       return result
@@ -123,6 +201,15 @@ class conferencesPlanning():
 class conferencesRunnning():
    def getAll(self):
       return session.query(conferencesRunningModel).all()
+
+   def getByID(self, keyword):
+      return session.query(conferencesRunningModel).filter(conferencesRunningModel.conferenceId.contains(keyword)).all()
+
+   def getByCity(self, keyword):
+      return session.query(conferencesRunningModel).filter(conferencesRunningModel.city.contains(keyword)).all()
+
+   def getByDeadline(self, keyword):
+      return session.query(conferencesRunningModel).filter(conferencesRunningModel.date.contains(keyword)).all()
    
    def insert(self, conferenceId, city, date, remarks):
       record = conferencesRunningModel(conferenceId, city, date, remarks)

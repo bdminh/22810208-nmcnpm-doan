@@ -1,9 +1,20 @@
 import os
 import pandas as pd
+from scrapy.crawler import CrawlerProcess
+from scrapy.utils.project import get_project_settings
 
 from Models.index import contextModels
+from crawler.spiders.ccf_spider import CCFSpider
+from crawler.spiders.lix_ahead_spider import lixAheadSpider
+from crawler.spiders.lix_fullname_spider import lixFullnameSpider
+from crawler.spiders.lix_future_spider import lixFutureSpider
+from crawler.spiders.lix_planning_spider import lixPlanningSpider
+from crawler.spiders.lix_running_spider import lixRunningSpider
 
 class Controller():
+    def __init__(self):
+        self.path=os.path.dirname(os.path.abspath(__file__)).replace('Controller', '')
+
     def getDataCCF(self):
         kq=[['Conference', 
             'Description', 
@@ -107,25 +118,239 @@ class Controller():
         return kq
 
     def getFullname(self, keyword):
-        records=contextModels.conferencesDetails.getAll()
-        for record in records:
-            if record.conferenceId == keyword:
-                return record
-        return []
+        kq=[['Conference', 
+             'Fullname'
+             ]]
 
-    def searchConference(self, keyword):
-        pass
+        result=contextModels.conferencesDetails.getByID(keyword)
+
+        for i in result:
+            kq.append([i.conferenceId, 
+                       i.name
+                       ])
+        return kq
+
+    def searchHeadConference(self, keyword):
+        kq=[['Conference', 
+            'City', 
+            'Deadline',
+            'Date', 
+            'Notification', 
+            'Submission']]
+
+        records = contextModels.conferences.getByID(keyword)
+        for i in records:
+            kq.append([i.conferenceId, i.city, i.deadline, i.date, i.notification, i.submission])
+
+        records = contextModels.conferences.getByCity(keyword)
+        for i in records:
+            kq.append([i.conferenceId, i.city, i.deadline, i.date, i.notification, i.submission])
+
+        records = contextModels.conferences.getByDeadline(keyword)
+        for i in records:
+            kq.append([i.conferenceId, i.city, i.deadline, i.date, i.notification, i.submission])
+        
+        new_kq = []
+        for elem in kq:
+            if elem not in new_kq:
+                new_kq.append(elem)
+                
+        return new_kq
+    
+    def searchCCFConference(self, keyword):
+        kq=[['Conference', 
+            'Description', 
+            'Place', 
+            'Year', 
+            'Date', 
+            'Deadline', 
+            'Timezone', 
+            'Website', 
+            'Note']]
+
+        records = contextModels.conferencesCCF.getByID(keyword)
+        for i in records:
+            kq.append([i.conferenceId, 
+                       i.description, 
+                       i.place, 
+                       i.year, 
+                       i.date, 
+                       i.deadline, 
+                       i.timezone, 
+                       i.timezone, 
+                       i.note])
+
+        records = contextModels.conferencesCCF.getByCity(keyword)
+        for i in records:
+            kq.append([i.conferenceId, 
+                       i.description, 
+                       i.place, 
+                       i.year, 
+                       i.date, 
+                       i.deadline, 
+                       i.timezone, 
+                       i.timezone, 
+                       i.note])
+
+        records = contextModels.conferencesCCF.getByDeadline(keyword)
+        for i in records:
+            kq.append([i.conferenceId, 
+                       i.description, 
+                       i.place, 
+                       i.year, 
+                       i.date, 
+                       i.deadline, 
+                       i.timezone, 
+                       i.timezone, 
+                       i.note])
+        
+        new_kq = []
+        for elem in kq:
+            if elem not in new_kq:
+                new_kq.append(elem)
+                
+        return new_kq
+
+    def searchFutureConference(self, keyword):
+        kq=[['Conference', 
+              'City', 
+              'Date', 
+              'Notification', 
+              'Final Version', 
+              'Early Registration', 
+              'Remarks']]
+
+        records = contextModels.conferencesFutute.getByID(keyword)
+        for i in records:
+            kq.append([i.conferenceId, 
+                       i.city, 
+                       i.date, 
+                       i.notification, 
+                       i.finalVersion, 
+                       i.earlyRegistration, 
+                       i.remarks])
+
+        records = contextModels.conferencesFutute.getByCity(keyword)
+        for i in records:
+            kq.append([i.conferenceId, 
+                       i.city, 
+                       i.date, 
+                       i.notification, 
+                       i.finalVersion, 
+                       i.earlyRegistration, 
+                       i.remarks])
+
+        records = contextModels.conferencesFutute.getByDeadline(keyword)
+        for i in records:
+            kq.append([i.conferenceId, 
+                       i.city, 
+                       i.date, 
+                       i.notification, 
+                       i.finalVersion, 
+                       i.earlyRegistration, 
+                       i.remarks])
+        
+        new_kq = []
+        for elem in kq:
+            if elem not in new_kq:
+                new_kq.append(elem)
+                
+        return new_kq
+
+    def searchPlanningConference(self, keyword):
+        kq=[['Conference', 
+              'Year', 
+              'City', 
+              'Starting Date', 
+              'Ending Date',
+              'Remarks']]
+
+        records = contextModels.conferencesPlanning.getByID(keyword)
+        for i in records:
+            kq.append([i.conferenceId, 
+                       i.Year, 
+                       i.city, 
+                       i.startingDate, 
+                       i.endingDate, 
+                       i.remarks])
+
+        records = contextModels.conferencesPlanning.getByCity(keyword)
+        for i in records:
+            kq.append([i.conferenceId, 
+                       i.Year, 
+                       i.city, 
+                       i.startingDate, 
+                       i.endingDate, 
+                       i.remarks])
+
+        records = contextModels.conferencesPlanning.getByDeadline(keyword)
+        for i in records:
+            kq.append([i.conferenceId, 
+                       i.Year, 
+                       i.city, 
+                       i.startingDate, 
+                       i.endingDate, 
+                       i.remarks])
+        
+        new_kq = []
+        for elem in kq:
+            if elem not in new_kq:
+                new_kq.append(elem)
+                
+        return new_kq
+
+    def searchRunningConference(self, keyword):
+        kq=[['Conference', 
+             'City', 
+             'Date',
+             'Remarks'
+             ]]
+
+        records = contextModels.conferencesRunnning.getByID(keyword)
+        for i in records:
+            kq.append([i.conferenceId,
+                       i.city, 
+                       i.date,
+                       i.remarks])
+
+        records = contextModels.conferencesRunnning.getByCity(keyword)
+        for i in records:
+            kq.append([i.conferenceId,
+                       i.city, 
+                       i.date,
+                       i.remarks])
+
+        records = contextModels.conferencesRunnning.getByDeadline(keyword)
+        for i in records:
+            kq.append([i.conferenceId,
+                       i.city, 
+                       i.date,
+                       i.remarks])
+        
+        new_kq = []
+        for elem in kq:
+            if elem not in new_kq:
+                new_kq.append(elem)
+                
+        return new_kq
 
     def updateDataCCF(self):
+        settings=get_project_settings()
+        process=CrawlerProcess(settings)
+
         # delete database first
         contextModels.conferencesCCF.deleteAll()
 
         # run command
-        cmd = "scrapy crawl ccf-spider"
-        returned_value = os.system(cmd)  # returns the exit code in unix
-        return returned_value
+        process.crawl(CCFSpider)
+        process.start()
+
+        return 'Updated completely'
 
     def updateDataLix(self):
+        settings=get_project_settings()
+        process=CrawlerProcess(settings)
+
         # delete database first
         contextModels.conferences.deleteAll()
         contextModels.conferencesDetails.deleteAll()
@@ -134,22 +359,13 @@ class Controller():
         contextModels.conferencesRunnning.deleteAll()
 
         # run command
-        cmd = "scrapy crawl lix-ahead-spider"
-        returned_value = os.system(cmd)  # returns the exit code in unix
-        
-        cmd = "scrapy crawl lix-fullname-spider"
-        returned_value = os.system(cmd)  # returns the exit code in unix
-
-        cmd = "scrapy crawl lix-future-spider"
-        returned_value = os.system(cmd)  # returns the exit code in unix
-
-        cmd = "scrapy crawl lix-planning-spider"
-        returned_value = os.system(cmd)  # returns the exit code in unix
-
-        cmd = "scrapy crawl lix-running-spider"
-        returned_value = os.system(cmd)  # returns the exit code in unix
-        
-        return 'OK'
+        process.crawl(lixAheadSpider)
+        process.crawl(lixFullnameSpider)
+        process.crawl(lixFutureSpider)
+        process.crawl(lixPlanningSpider)
+        process.crawl(lixRunningSpider)
+        process.start()        
+        return 'Updated completely'
 
     def exportDataCCF(self):
         kq={'Conference': [],
@@ -178,7 +394,7 @@ class Controller():
         data = pd.DataFrame(kq)
 
         # writing to Excel
-        datatoexcel = pd.ExcelWriter('Reports/CCF.xlsx')
+        datatoexcel = pd.ExcelWriter(f'{self.path}\\Reports\\/CCF.xlsx')
         
         # write DataFrame to excel
         data.to_excel(datatoexcel)
@@ -186,7 +402,7 @@ class Controller():
         # save the excel
         datatoexcel.close()
 
-        return 'OK'
+        return 'Exported completely'
 
     def exportDataLixAhead(self):
         kq={'Conference': [],
@@ -209,7 +425,7 @@ class Controller():
         data = pd.DataFrame(kq)
 
         # writing to Excel
-        datatoexcel = pd.ExcelWriter('Reports/LIX-AheadConference.xlsx')
+        datatoexcel = pd.ExcelWriter(f'{self.path}\\Reports\\LIX-AheadConference.xlsx')
         
         # write DataFrame to excel
         data.to_excel(datatoexcel)
@@ -217,7 +433,7 @@ class Controller():
         # save the excel
         datatoexcel.close()
 
-        return 'OK'
+        return 'Exported completely'
 
     def exportDataLixFuture(self):
         kq={'Conference': [],
@@ -242,7 +458,7 @@ class Controller():
         data = pd.DataFrame(kq)
 
         # writing to Excel
-        datatoexcel = pd.ExcelWriter('Reports/LIX-FutureConference.xlsx')
+        datatoexcel = pd.ExcelWriter(f'{self.path}\\Reports\\LIX-FutureConference.xlsx')
         
         # write DataFrame to excel
         data.to_excel(datatoexcel)
@@ -250,7 +466,7 @@ class Controller():
         # save the excel
         datatoexcel.close()
 
-        return 'OK'
+        return 'Exported completely'
 
     def exportDataLixPlanning(self):
         kq={'Conference': [],
@@ -273,7 +489,7 @@ class Controller():
         data = pd.DataFrame(kq)
 
         # writing to Excel
-        datatoexcel = pd.ExcelWriter('Reports/LIX-PlanningConference.xlsx')
+        datatoexcel = pd.ExcelWriter(f'{self.path}\\Reports\\LIX-PlanningConference.xlsx')
         
         # write DataFrame to excel
         data.to_excel(datatoexcel)
@@ -281,7 +497,7 @@ class Controller():
         # save the excel
         datatoexcel.close()
 
-        return 'OK'
+        return 'Exported completely'
 
     def exportDataLixRunning(self):
         kq={'Conference': [],
@@ -300,7 +516,7 @@ class Controller():
         data = pd.DataFrame(kq)
 
         # writing to Excel
-        datatoexcel = pd.ExcelWriter('Reports/LIX-RunningConference.xlsx')
+        datatoexcel = pd.ExcelWriter(f'{self.path}\\Reports\\LIX-RunningConference.xlsx')
         
         # write DataFrame to excel
         data.to_excel(datatoexcel)
@@ -308,7 +524,7 @@ class Controller():
         # save the excel
         datatoexcel.close()
 
-        return 'OK'
+        return 'Exported completely'
 
 controller=Controller()
 

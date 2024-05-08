@@ -6,7 +6,7 @@ import yaml
 import json
 from crawler.items import CrawlerCCFItem
 
-class MySpider(scrapy.Spider):
+class CCFSpider(scrapy.Spider):
     name = 'ccf-spider'
      
     def start_requests(self):
