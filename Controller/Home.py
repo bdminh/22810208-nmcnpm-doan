@@ -1,5 +1,6 @@
 import os
 import pandas as pd
+
 from scrapy.crawler import CrawlerProcess
 from scrapy.utils.project import get_project_settings
 
@@ -335,11 +336,11 @@ class Controller():
         return new_kq
 
     def updateDataCCF(self):
-        settings=get_project_settings()
-        process=CrawlerProcess(settings)
-
         # delete database first
         contextModels.conferencesCCF.deleteAll()
+
+        settings=get_project_settings()
+        process=CrawlerProcess(settings)
 
         # run command
         process.crawl(CCFSpider)
@@ -348,9 +349,6 @@ class Controller():
         return 'Updated completely'
 
     def updateDataLix(self):
-        settings=get_project_settings()
-        process=CrawlerProcess(settings)
-
         # delete database first
         contextModels.conferences.deleteAll()
         contextModels.conferencesDetails.deleteAll()
@@ -358,13 +356,17 @@ class Controller():
         contextModels.conferencesPlanning.deleteAll()
         contextModels.conferencesRunnning.deleteAll()
 
+        settings=get_project_settings()
+        process=CrawlerProcess(settings)
+
         # run command
         process.crawl(lixAheadSpider)
         process.crawl(lixFullnameSpider)
         process.crawl(lixFutureSpider)
         process.crawl(lixPlanningSpider)
         process.crawl(lixRunningSpider)
-        process.start()        
+        process.start()  
+
         return 'Updated completely'
 
     def exportDataCCF(self):

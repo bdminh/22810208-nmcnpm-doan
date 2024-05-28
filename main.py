@@ -110,12 +110,14 @@ if __name__ == '__main__':
             print("Nhấn enter để tiếp tục: ", end =" ")
             temp=input()
             returned_value = os.system('cls')
+            returned_value = os.system(f'python {path}\\main.py')
         elif choice==9:
             result=controller.updateDataLix()
             print(result)
             print("Nhấn enter để tiếp tục: ", end =" ")
             temp=input()
             returned_value = os.system('cls')
+            returned_value = os.system(f'python {path}\\main.py')
         elif choice==10:
             result=controller.exportDataCCF()
             print(result)
